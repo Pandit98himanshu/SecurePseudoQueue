@@ -13,11 +13,23 @@ public class SecurePseudoQueueService {
     EntityManager entityManager;
 
     public String encrypt(Transaction transaction) {
-        return null;
+        String encryptedTransaction = transaction.toString();
+        return encryptedTransaction;
+    }
+
+    public Transaction decrypt(String data) {
+        String[] datas = data.split("-");
+        long accountNumber = Long.parseLong(datas[0]);
+        String type = datas[1];
+        double amount = Double.parseDouble(datas[2]);
+        String currency = datas[3];
+        long accountFrom = Long.parseLong(datas[4]);
+
+        return new Transaction(accountNumber, type, amount, currency, accountFrom);
     }
 
     public void decryptAndAddToDB(String data) {
-        Transaction transaction = null;
+        Transaction transaction = decrypt(data);
         addToDB(transaction);
     }
 

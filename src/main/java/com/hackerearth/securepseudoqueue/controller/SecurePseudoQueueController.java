@@ -14,7 +14,7 @@ public class SecurePseudoQueueController {
     SecurePseudoQueueService service;
 
     @PostMapping("/transaction/{accountNumber}/{type}/{amount}/{currency}/{accountFrom}")
-    public void getTransactionDetails(@PathVariable long accountNumber,
+    public void addNewTransaction(@PathVariable long accountNumber,
                         @PathVariable String type,
                         @PathVariable double amount,
                         @PathVariable String currency,
