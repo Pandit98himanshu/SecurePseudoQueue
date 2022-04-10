@@ -14,12 +14,19 @@ public class SecurePseudoQueueController {
     SecurePseudoQueueService service;
 
     @PostMapping("/transaction/{accountNumber}/{type}/{amount}/{currency}/{accountFrom}")
-    public void addNewTransaction(@PathVariable long accountNumber,
+    public void addNewTransaction(@PathVariable String accountNumber,
                         @PathVariable String type,
-                        @PathVariable double amount,
+                        @PathVariable String amount,
                         @PathVariable String currency,
-                        @PathVariable long accountFrom) {
-        Transaction transaction = new Transaction(accountNumber, type, amount, currency, accountFrom);
+                        @PathVariable String accountFrom) {
+
+        Transaction transaction = new Transaction(
+                Long.parseLong(accountNumber),
+                type,
+                Double.parseDouble(amount),
+                currency,
+                Long.parseLong(accountFrom)
+        );
         String encryptedTransaction = service.encrypt(transaction);
         addToDB(encryptedTransaction);
     }
