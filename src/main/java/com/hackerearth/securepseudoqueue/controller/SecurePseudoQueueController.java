@@ -14,7 +14,7 @@ public class SecurePseudoQueueController {
     SecurePseudoQueueService service;
 
     @PostMapping("/transaction/{accountNumber}/{type}/{amount}/{currency}/{accountFrom}")
-    public void addNewTransaction(@PathVariable String accountNumber,
+    public String addNewTransaction(@PathVariable String accountNumber,
                         @PathVariable String type,
                         @PathVariable String amount,
                         @PathVariable String currency,
@@ -29,6 +29,8 @@ public class SecurePseudoQueueController {
         );
         String encryptedTransaction = service.encrypt(transaction);
         addToDB(encryptedTransaction);
+
+        return encryptedTransaction;
     }
 
     public void addToDB(String encryptedTransaction) {
