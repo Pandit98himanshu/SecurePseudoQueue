@@ -23,6 +23,8 @@ public class SecurePseudoQueueService {
         // encrypting object data
         String encryptedTransaction = transaction.toString();
 
+        decryptAndAddToDB(encryptedTransaction);
+
         System.out.println("Encrypted data = " + encryptedTransaction);
         return encryptedTransaction;
     }

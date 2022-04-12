@@ -16,8 +16,6 @@ public class SecurePseudoQueueController {
     public String addNewTransaction(@RequestBody Transaction transaction) {
         String encryptedTransaction = service.encrypt(transaction);
 
-        service.decryptAndAddToDB(encryptedTransaction);
-
         return encryptedTransaction;
     }
 
@@ -26,6 +24,5 @@ public class SecurePseudoQueueController {
     public void addToDB(@RequestBody Transaction transaction) {
         service.addToDB(transaction);
     }
-
 
 }
