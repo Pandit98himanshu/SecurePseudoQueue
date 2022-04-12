@@ -11,39 +11,21 @@ public class SecurePseudoQueueController {
     @Autowired
     SecurePseudoQueueService service;
 
-/*
-    @PostMapping("/transaction/{accountNumber}/{type}/{amount}/{currency}/{accountFrom}")
-    public Transaction addNewTransaction(@PathVariable String accountNumber,
-                        @PathVariable String type,
-                        @PathVariable String amount,
-                        @PathVariable String currency,
-                        @PathVariable String accountFrom) {
-
-        Transaction transaction = new Transaction(
-                Long.parseLong(accountNumber),
-                type,
-                Double.parseDouble(amount),
-                currency,
-                Long.parseLong(accountFrom)
-        );
-        String encryptedTransaction = service.encrypt(transaction);
-        addToDB(encryptedTransaction);
-
-        return transaction;
-    }
-*/
-
-    @PostMapping("/transaction")
+    @RequestMapping(value = "/transaction", method = RequestMethod.POST)
     @ResponseBody
     public String addNewTransaction(@RequestBody Transaction transaction) {
-
         String encryptedTransaction = service.encrypt(transaction);
-        addToDB(encryptedTransaction);
+
+        service.decryptAndAddToDB(encryptedTransaction);
 
         return encryptedTransaction;
     }
 
-    public void addToDB(String encryptedTransaction) {
-        service.decryptAndAddToDB(encryptedTransaction);
+    @RequestMapping(value = "/addtodb", method = RequestMethod.POST)
+    @ResponseBody
+    public void addToDB(@RequestBody Transaction transaction) {
+        service.addToDB(transaction);
     }
+
+
 }
